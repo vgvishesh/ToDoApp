@@ -33,8 +33,8 @@ var toDo = mongoose.model('ToDo', {
  })
 
 app.post('/api/todos', function (req, res) {
-	toDo.Create({
-		text : req.body.text,
+	toDo.create({
+		text : req.body.td,
 		done : false
 	}, function(err, todo) {
 		if(err)
@@ -64,6 +64,11 @@ app.delete('/api/todos/:todo_id', function (req, res) {
 	})
 })
 
+
+// application route
+app.get('*', function (req, res) {
+	res.sendfile('./public/index.html');
+})
 
 // listen (start app with node server.js) ======================================
 var server = app.listen(8080, function() {
