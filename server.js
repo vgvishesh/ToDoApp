@@ -5,7 +5,12 @@ var morgan = require('morgan');
 var bodyParser = require('body-Parser');
 var methodOverride = require('method-override');
 
-mongoose.connect('mongodb://node:nodeuser@mongo.onmodulus.net:27017/uwO3mypu');     // connect to mongoDB database on modulus.io
+mongoose.connect('mongodb://vishesh:vishesh@jello.modulusmongo.net:27017/mysyN2er', function(err, db) {
+	if(err) {
+		console.log(err);
+	}
+});     
+// connect to mongoDB database on modulus.io
 
 app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
 app.use(morgan('dev'));                                         // log every request to the console
@@ -16,7 +21,7 @@ app.use(methodOverride());
 
 
 // defining the model
-var toDo = mongoose.model('ToDo', {
+var toDo = mongoose.model('toDo', {
 	text : String
 })
 
@@ -33,9 +38,9 @@ var toDo = mongoose.model('ToDo', {
  })
 
 app.post('/api/todos', function (req, res) {
+	console.log("new entry : " + req.body.text);
 	toDo.create({
-		text : req.body.td,
-		done : false
+		text : req.body.text
 	}, function(err, todo) {
 		if(err)
 			res.send(err);
